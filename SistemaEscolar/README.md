@@ -8,6 +8,7 @@ O projeto permite o gerenciamento completo (CRUD) de alunos, armazenando os dado
 
 O projeto está organizado seguindo as melhores práticas de separação de responsabilidades:
 
+```text
 SistemaEscolar/
 │
 ├── database/
