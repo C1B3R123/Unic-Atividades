@@ -1,0 +1,7 @@
+# Ignora arquivos de banco de dados SQLite
+*.db
+*.sqlite3
+escola.db
+
+# Ignora pastas criadas automaticamente pelo Pithon
+__pycache__/
