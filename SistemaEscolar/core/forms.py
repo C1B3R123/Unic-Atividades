@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Aluno
+from .models import Aluno, Turma
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Senha")
@@ -40,4 +40,19 @@ class AlunoForm(forms.ModelForm):
         labels = {
             'nome': 'Nome do Aluno',
             'nota_media': 'Nota Média',
+        }
+
+class TurmaForm(forms.ModelForm):
+    alunos_lista = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Digite o nome dos alunos (um por linha)', 'rows': 5}),
+        label="Lista de Alunos",
+        required=False,
+        help_text="Adicione os alunos agora ou deixe em branco para adicionar depois."
+    )
+
+    class Meta:
+        model = Turma
+        fields = ['nome']
+        labels = {
+            'nome': 'Nome da Turma',
         }

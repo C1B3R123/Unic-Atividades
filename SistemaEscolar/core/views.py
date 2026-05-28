@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Turma, Aluno
-from .forms import UserRegistrationForm, UserProfileForm, AlunoForm
+from .forms import UserRegistrationForm, UserProfileForm, AlunoForm, TurmaForm
 
 def index(request):
     return render(request, 'core/index.html')
@@ -41,6 +41,27 @@ def acesso(request):
 def dashboard(request):
     turmas = Turma.objects.filter(professor=request.user)
     return render(request, 'core/dashboard.html', {'turmas': turmas})
+
+@login_required
+def adicionar_turma(request):
+    if request.method == 'POST':
+        form = TurmaForm(request.POST)
+        if form.is_valid():
+            turma = form.save(commit=False)
+            turma.professor = request.user
+            turma.save()
+            
+            # Processar lista de alunos
+            alunos_raw = form.cleaned_data.get('alunos_lista')
+            if alunos_raw:
+                nomes = [n.strip() for n in alunos_raw.split('\n') if n.strip()]
+                for nome in nomes:
+                    Aluno.objects.create(nome=nome, turma=turma)
+            
+            return redirect('dashboard')
+    else:
+        form = TurmaForm()
+    return render(request, 'core/adicionar_turma.html', {'form': form})
 
 @login_required
 def turma_detalhe(request, id):

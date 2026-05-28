@@ -26,12 +26,12 @@ Certifique-se de ter o Python instalado em sua máquina.
 ## 🔧 Instalação e Execução
 
 1. **Clone o repositório ou acesse a pasta do projeto:**
-   ```bash
+```bash
    cd SistemaEscolar
    ```
 
 2. **Crie um ambiente virtual (opcional, mas recomendado):**
-   ```bash
+```bash
    python -m venv venv
    source venv/bin/activate  # Linux/macOS
    # ou
@@ -39,17 +39,17 @@ Certifique-se de ter o Python instalado em sua máquina.
    ```
 
 3. **Instale as dependências:**
-   ```bash
+```bash
    pip install -r requirements.txt
    ```
 
 4. **Aplique as migrações do banco de dados:**
-   ```bash
+```bash
    python manage.py migrate
    ```
 
 5. **Inicie o servidor de desenvolvimento:**
-   ```bash
+```bash
    python manage.py runserver
    ```
 
