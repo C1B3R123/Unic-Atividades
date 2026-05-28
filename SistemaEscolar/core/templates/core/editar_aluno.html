@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Editar Aluno - EduGerente{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="card-title fw-bold mb-4">Editar Aluno</h2>
+                <p class="text-muted mb-4">Editando dados de: <strong>{{ aluno.nome }}</strong> ({{ aluno.turma.nome }})</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary px-4">Salvar Alterações</button>
+                        <a href="{% url 'turma_detalhe' aluno.turma.id %}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

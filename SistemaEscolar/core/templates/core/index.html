@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-3 fw-bold text-primary mb-4">EduGerente</h1>
+        <p class="lead mb-4">A plataforma definitiva para professores gerenciarem suas turmas e alunos de forma simples, rápida e segura.</p>
+        {% if not user.is_authenticated %}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="{% url 'acesso' %}#registro" class="btn btn-primary btn-lg px-4 me-md-2">Começar Agora</a>
+            <a href="{% url 'acesso' %}#login" class="btn btn-outline-secondary btn-lg px-4">Já tenho conta</a>
+        </div>
+        {% else %}
+        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg px-4">Ir para Dashboard</a>
+        {% endif %}
+    </div>
+    <div class="col-lg-6 d-none d-lg-block">
+        <div class="bg-primary text-white p-5 rounded-4 shadow">
+            <h3>Por que usar o EduGerente?</h3>
+            <ul class="list-unstyled mt-3">
+                <li class="mb-2">✅ Gestão simplificada de turmas</li>
+                <li class="mb-2">✅ Acompanhamento de notas</li>
+                <li class="mb-2">✅ Perfil de professores</li>
+                <li class="mb-2">✅ 100% Responsivo</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

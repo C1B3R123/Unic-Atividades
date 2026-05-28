@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <!-- Login Section -->
+    <div class="col-md-5" id="login">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="card-title text-center mb-4">Login</h2>
+                <form method="post" action="{% url 'acesso' %}#login">
+                    {% csrf_token %}
+                    {% bootstrap_form login_form %}
+                    <button type="submit" name="login_submit" class="btn btn-primary w-100 py-2">Entrar</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p>Não tem conta? <a href="#registro" class="text-decoration-none fw-bold">Registre-se aqui</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+        <div class="vr h-75"></div>
+    </div>
+
+    <div class="col-12 d-md-none my-5">
+        <hr>
+    </div>
+
+    <!-- Register Section -->
+    <div class="col-md-5" id="registro">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="card-title text-center mb-4">Criar Conta</h2>
+                <form method="post" action="{% url 'acesso' %}#registro">
+                    {% csrf_token %}
+                    {% bootstrap_form register_form %}
+                    <button type="submit" name="register_submit" class="btn btn-success w-100 py-2">Registrar</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p>Já tem conta? <a href="#login" class="text-decoration-none fw-bold">Faça login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ turma.nome }} - EduGerente{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Minhas Turmas</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ turma.nome }}</li>
+  </ol>
+</nav>
+
+<div class="card shadow-sm border-0 mb-4 bg-primary text-white">
+    <div class="card-body p-4">
+        <h2 class="fw-bold mb-1">{{ turma.nome }}</h2>
+        <p class="opacity-75 mb-0">Professor Responsável: <strong>{{ turma.professor.get_full_name|default:turma.professor.username }}</strong></p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-bold">Lista de Alunos</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3">Nome do Aluno</th>
+                        <th class="py-3 text-center">Nota Média</th>
+                        <th class="text-end pe-4 py-3">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                    <tr>
+                        <td class="ps-4 fw-medium">{{ aluno.nome }}</td>
+                        <td class="text-center">
+                            <span class="badge {% if aluno.nota_media >= 7 %}bg-success{% elif aluno.nota_media >= 5 %}bg-warning{% else %}bg-danger{% endif %} rounded-pill px-3 py-2">
+                                {{ aluno.nota_media }}
+                            </span>
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'editar_aluno' aluno.id %}" class="btn btn-sm btn-outline-primary px-3">Editar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-5 text-muted">Nenhum aluno cadastrado nesta turma.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
