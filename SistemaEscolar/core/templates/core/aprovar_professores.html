@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm border-0 mb-4 bg-primary text-white">
+    <div class="card-body p-4">
+        <h2 class="fw-bold mb-1">Aprovar Professores</h2>
+        <p class="opacity-75 mb-0">Gerencie as solicitacoes de acesso de novos professores.</p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Usuario</th>
+                        <th>Email</th>
+                        <th>Nome Completo</th>
+                        <th class="text-end pe-4">Acoes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pendentes %}
+                    <tr>
+                        <td class="ps-4 fw-bold">{{ p.user.username }}</td>
+                        <td>{{ p.user.email }}</td>
+                        <td>{{ p.user.get_full_name }}</td>
+                        <td class="text-end pe-4">
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="perfil_id" value="{{ p.id }}">
+                                <button type="submit" name="acao" value="aprovar" class="btn btn-sm btn-success px-3">Aprovar</button>
+                                <button type="submit" name="acao" value="recusar" class="btn btn-sm btn-outline-danger px-3">Recusar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">Nenhum professor aguardando aprovacao.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

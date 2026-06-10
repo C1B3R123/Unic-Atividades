@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm border-0 mb-4 bg-success text-white">
+    <div class="card-body p-4">
+        <h2 class="fw-bold mb-1">Bem-vindo, {{ aluno.nome }}</h2>
+        <p class="opacity-75 mb-0">Turma: <strong>{{ aluno.turma.nome }}</strong></p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-bold">Minhas Notas por Materia</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3">Materia</th>
+                        <th class="py-3 text-center">B1</th>
+                        <th class="py-3 text-center">B2</th>
+                        <th class="py-3 text-center">B3</th>
+                        <th class="py-3 text-center">B4</th>
+                        <th class="py-3 text-center">B5</th>
+                        <th class="py-3 text-center">B6</th>
+                        <th class="py-3 text-center">Media Atual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mat in materias %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-primary">{{ mat.nome }}</td>
+                        <!-- Como as notas estao no Aluno (simplificacao por enquanto), repetimos as notas globais -->
+                        <!-- Em um sistema real, as notas estariam em um modelo AlunoMateria -->
+                        <td class="text-center">{{ aluno.nota1 }}</td>
+                        <td class="text-center">{{ aluno.nota2 }}</td>
+                        <td class="text-center">{{ aluno.nota3 }}</td>
+                        <td class="text-center">{{ aluno.nota4 }}</td>
+                        <td class="text-center">{{ aluno.nota5 }}</td>
+                        <td class="text-center">{{ aluno.nota6 }}</td>
+                        <td class="text-center">
+                            <span class="badge {% if aluno.nota_media >= 7 %}bg-success{% elif aluno.nota_media >= 5 %}bg-warning{% else %}bg-danger{% endif %} rounded-pill px-3 py-2">
+                                {{ aluno.nota_media }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">Nenhuma materia vinculada a sua turma.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
