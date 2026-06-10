@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 
-{% block title %}Adicionar Turma - EduGerente{% endblock %}
+{% block title %}{% if editando %}Editar Turma{% else %}Adicionar Turma{% endif %} - EduGerente{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
-                <h2 class="card-title fw-bold mb-4">Criar Nova Turma</h2>
+                <h2 class="card-title fw-bold mb-4">{% if editando %}Editar Turma: {{ turma.nome }}{% else %}Criar Nova Turma{% endif %}</h2>
                 <form method="post">
                     {% csrf_token %}
                     {% bootstrap_form form %}
+                    {% if not editando %}
                     <div class="alert alert-info py-2">
                         <i class="bi bi-info-circle"></i> <strong>Dica:</strong> Para adicionar os alunos, digite um nome em cada linha na caixa acima.
                     </div>
+                    {% endif %}
                     <div class="d-flex gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary px-4">Criar Turma e Alunos</button>
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary px-4">{% if editando %}Salvar Alterações{% else %}Criar Turma e Alunos{% endif %}</button>
+                        <a href="{% if editando %}{% url 'turma_detalhe' turma.id %}{% else %}{% url 'dashboard' %}{% endif %}" class="btn btn-outline-secondary">Cancelar</a>
                     </div>
                 </form>
             </div>
@@ -25,3 +27,4 @@
     </div>
 </div>
 {% endblock %}
+

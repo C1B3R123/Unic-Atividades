@@ -7,7 +7,15 @@
     <title>{% block title %}Sistema Escolar{% endblock %}</title>
     {% bootstrap_css %}
     <style>
-        body { background-color: #f8f9fa; }
+        body { 
+            background-color: #f8f9fa; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
         .navbar { margin-bottom: 2rem; }
         .card { transition: transform 0.2s; }
         .card:hover { transform: scale(1.02); }
@@ -19,12 +27,16 @@
             <a class="navbar-brand fw-bold" href="{% url 'index' %}">EduGerente</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
-            </button>1
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Minhas Turmas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'professores' %}">Professores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+                        {% if user.perfil.tipo == 'DIRETOR' %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'aprovar_professores' %}">Aprovar Professores</a></li>
+                        {% elif user.perfil.tipo == 'PROFESSOR' and user.perfil.aprovado %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'gerenciar_materias' %}">Materias</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'perfil' %}">Meu Perfil</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-outline-light ms-lg-2" href="{% url 'logout' %}">Sair</a></li>
                     {% else %}
@@ -36,13 +48,15 @@
         </div>
     </nav>
 
-    <div class="container">
+    <main class="container">
         {% bootstrap_messages %}
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
-    <footer class="text-center py-4 mt-5 text-muted border-top">
-        &copy; 2026 EduGerente - Sistema de Gestão Escolar
+    <footer class="bg-white text-center py-4 mt-5 text-muted border-top">
+        <div class="container">
+            &copy; 2026 EduGerente - Sistema de Gestão Escolar
+        </div>
     </footer>
 
     {% bootstrap_javascript %}

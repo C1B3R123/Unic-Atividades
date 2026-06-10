@@ -36,10 +36,23 @@ class UserProfileForm(forms.ModelForm):
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
-        fields = ['nome', 'nota_media']
+        fields = ['nome', 'nota1', 'nota2', 'nota3', 'nota4', 'nota5', 'nota6']
         labels = {
             'nome': 'Nome do Aluno',
-            'nota_media': 'Nota Média',
+            'nota1': '1º Bimestre',
+            'nota2': '2º Bimestre',
+            'nota3': '3º Bimestre',
+            'nota4': '4º Bimestre',
+            'nota5': '5º Bimestre',
+            'nota6': '6º Bimestre',
+        }
+        help_texts = {
+            'nota1': 'Use N/A caso nao tenha nota.',
+            'nota2': 'Use N/A caso nao tenha nota.',
+            'nota3': 'Use N/A caso nao tenha nota.',
+            'nota4': 'Use N/A caso nao tenha nota.',
+            'nota5': 'Use N/A caso nao tenha nota.',
+            'nota6': 'Use N/A caso nao tenha nota.',
         }
 
 class TurmaForm(forms.ModelForm):
@@ -56,3 +69,6 @@ class TurmaForm(forms.ModelForm):
         labels = {
             'nome': 'Nome da Turma',
         }
+
+class CSVUploadForm(forms.Form):
+    arquivo_csv = forms.FileField(label="Selecione o arquivo CSV")
